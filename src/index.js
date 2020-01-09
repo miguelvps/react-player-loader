@@ -47,6 +47,8 @@ class ReactPlayerLoader extends React.Component {
    *        embedded Brightcove Player.
    */
   constructor(props) {
+    // eslint-disable-next-line
+    console.info('React Player Loader Constructor');
     super(props);
     this.refNode = null;
     this.setRefNode = ref => {
@@ -72,16 +74,15 @@ class ReactPlayerLoader extends React.Component {
       refNode: this.refNode,
       refNodeInsert: 'append',
       onSuccess: ({ref, type}) => {
+        // Store a player reference on the component.
+        this.player = ref;
 
         // If the component is not mounted when the callback fires, dispose
         // the player and bail out.
         if (!this.isMounted_) {
-          this.disposePlayer(ref);
+          this.disposePlayer();
           return;
         }
-
-        // Store a player reference on the component.
-        this.player = ref;
 
         // Null out the player reference when the player is disposed from
         // outside the component.
@@ -142,6 +143,8 @@ class ReactPlayerLoader extends React.Component {
    */
   disposePlayer() {
 
+    // eslint-disable-next-line
+    console.info('Disposing player', this.player);
     // Nothing to dispose.
     if (!this.player) {
       return;
@@ -345,6 +348,8 @@ class ReactPlayerLoader extends React.Component {
    * Called just before a component unmounts. Disposes the player.
    */
   componentWillUnmount() {
+    // eslint-disable-next-line
+    console.info('unmounting');
     this.isMounted_ = false;
     this.disposePlayer();
   }
@@ -356,8 +361,10 @@ class ReactPlayerLoader extends React.Component {
    *          The react element to render.
    */
   render() {
+    // eslint-disable-next-line
+    console.info('RPL rendering');
     const props = Object.assign(
-      {className: 'brightcove-react-player-loader'},
+      {className: 'my-loader'},
       this.props.attrs,
       {ref: this.setRefNode}
     );
